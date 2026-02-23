@@ -9,9 +9,10 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a sentence: ");
         String input = scanner.nextLine();
 
+        // Normalize string (Ignore case, spaces & special characters)
         String processed = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        if (isPalindromeRecursive(processed, 0, processed.length() - 1)) {
+        if (isPalindrome(processed)) {
             System.out.println("\"" + input + "\" is a Palindrome.");
         } else {
             System.out.println("\"" + input + "\" is NOT a Palindrome.");
@@ -20,18 +21,21 @@ public class PalindromeCheckerApp {
         scanner.close();
     }
 
-    // Recursive Palindrome Check
-    public static boolean isPalindromeRecursive(String str, int start, int end) {
+    public static boolean isPalindrome(String str) {
 
-        // Base condition
-        if (start >= end)
-            return true;
+        int left = 0;
+        int right = str.length() - 1;
 
-        // If characters don't match
-        if (str.charAt(start) != str.charAt(end))
-            return false;
+        while (left < right) {
 
-        // Recursive call
-        return isPalindromeRecursive(str, start + 1, end - 1);
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
     }
 }
