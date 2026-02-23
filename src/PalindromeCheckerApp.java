@@ -17,25 +17,26 @@ public class PalindromeCheckerApp {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter a word: ");
-        String word = scanner.nextLine();
+        System.out.print("Enter a sentence: ");
+        String input = scanner.nextLine();
 
-        String processedWord = word.toLowerCase();
+        // Remove spaces and convert to lowercase
+        String processed = input.replaceAll(" ", "").toLowerCase();
 
-        int length = processedWord.length();
+        int length = processed.length();
         boolean isPalindrome = true;
 
         for (int i = 0; i < length / 2; i++) {
-            if (processedWord.charAt(i) != processedWord.charAt(length - 1 - i)) {
+            if (processed.charAt(i) != processed.charAt(length - 1 - i)) {
                 isPalindrome = false;
                 break;
             }
         }
 
         if (isPalindrome) {
-            System.out.println(word + " is a Palindrome.");
+            System.out.println("\"" + input + "\" is a Palindrome.");
         } else {
-            System.out.println(word + " is NOT a Palindrome.");
+            System.out.println("\"" + input + "\" is NOT a Palindrome.");
         }
 
         scanner.close();
