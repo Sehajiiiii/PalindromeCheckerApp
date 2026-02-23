@@ -20,8 +20,8 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a sentence: ");
         String input = scanner.nextLine();
 
-        // Remove spaces and convert to lowercase
-        String processed = input.replaceAll(" ", "").toLowerCase();
+        // Remove all non-alphanumeric characters and convert to lowercase
+        String processed = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
         int length = processed.length();
         boolean isPalindrome = true;
