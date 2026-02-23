@@ -2,43 +2,101 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
+    // Node class for Singly Linked List
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
     public static void main(String[] args) {
-        displayWelcomeMessage();
-        checkPalindrome();
-    }
-
-    public static void displayWelcomeMessage() {
-        System.out.println("=================================");
-        System.out.println("     PALINDROME CHECKER APP     ");
-        System.out.println("=================================");
-    }
-
-    public static void checkPalindrome() {
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter a sentence: ");
         String input = scanner.nextLine();
 
-        // Remove all non-alphanumeric characters and convert to lowercase
         String processed = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        int length = processed.length();
-        boolean isPalindrome = true;
+        Node head = createLinkedList(processed);
 
-        for (int i = 0; i < length / 2; i++) {
-            if (processed.charAt(i) != processed.charAt(length - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome) {
+        if (isPalindrome(head)) {
             System.out.println("\"" + input + "\" is a Palindrome.");
         } else {
             System.out.println("\"" + input + "\" is NOT a Palindrome.");
         }
 
         scanner.close();
+    }
+
+    // Convert string to linked list
+    public static Node createLinkedList(String str) {
+
+        Node head = null;
+        Node tail = null;
+
+        for (char c : str.toCharArray()) {
+            Node newNode = new Node(c);
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+        return head;
+    }
+
+    // Check palindrome using fast & slow pointer
+    public static boolean isPalindrome(Node head) {
+
+        if (head == null || head.next == null)
+            return true;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow);
+        Node firstHalf = head;
+
+        // Compare both halves
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data)
+                return false;
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
+
+    // Reverse linked list
+    public static Node reverse(Node head) {
+
+        Node prev = null;
+        Node current = head;
+
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+
+        return prev;
     }
 }
